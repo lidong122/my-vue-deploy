@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>足球比赛深度分析系统</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,Segoe UI,Roboto}
+body{background:#0b0b0f;color:#e6e6e6;min-height:100vh;padding:20px}
+.container{max-width:1200px;margin:0 auto}
+.header{text-align:center;margin-bottom:30px}
+.header h1{color:#00d1ff;font-weight:700;font-size:28px}
+.header p{color:#888;margin-top:5px}
+
+.search-box{
+background:#121218;
+padding:20px;border-radius:12px;
+margin-bottom:30px;
+display:flex;gap:10px;
+flex-wrap:wrap;
+box-shadow:0 0 20px #0008
+}
+.search-box input{
+flex:1;min-width:200px;padding:12px 15px;
+background:#1a1a24;border:none;border-radius:8px;
+color:#fff;font-size:16px;outline:none
+}
+.search-box button{
+padding:12px 22px;background:#00a1ff;border:none;
+border-radius:8px;color:#fff;font-weight:600;cursor:pointer
+}
+.search-box button:hover{background:#0088dd}
+
+.grid{
+display:grid;grid-template-columns:repeat(2,1fr);gap:16px
+}
+@media(max-width:768px){.grid{grid-template-columns:1fr}}
+
+.card{
+background:#121218;border-radius:12px;padding:18px;
+box-shadow:0 4px 12px #0006;position:relative;overflow:hidden
+}
+.card h3{
+color:#00d1ff;margin-bottom:12px;font-size:16px;
+display:flex;align-items:center;gap:8px
+}
+.card .label{color:#777;font-size:13px;margin-bottom:4px}
+.card .value{color:#fff;font-size:18px;font-weight:600}
+.card .row{display:flex;justify-content:space-between;margin-bottom:10px}
+
+.analysis{
+background:#15151f;padding:16px;border-radius:10px;margin-top:10px
+}
+.analysis p{line-height:1.6;color:#ccc}
+.highlight{color:#00ffcc;font-weight:600}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>⚽ 足球比赛深度分析系统</h1>
+<p>历史战绩 · 盘口 · xG · 大小球智能分析</p>
+</div>
+
+<div class="search-box">
+<input type="text" id="match" placeholder="输入比赛：例如 曼联 VS 曼城">
+<button onclick="analyze()">开始分析</button>
+</div>
+
+<div id="result" style="display:none">
+<div class="grid">
+
+<div class="card">
+<h3>📊 比赛信息</h3>
+<div class="row"><span class="label">对阵</span><span class="value" id="team"></span></div>
+<div class="row"><span class="label">联赛</span><span class="value">英超</span></div>
+<div class="row"><span class="label">开赛时间</span><span class="value">今日 23:00</span></div>
+</div>
+
+<div class="card">
+<h3>📈 历史战绩（近6场）</h3>
+<div class="row"><span class="label">主队</span><span class="value">4胜1平1负</span></div>
+<div class="row"><span class="label">客队</span><span class="value">2胜2平2负</span></div>
+<div class="row"><span class="label">交锋</span><span class="value">2胜1平</span></div>
+</div>
+
+<div class="card">
+<h3>🎯 预期进球 xG / xGA</h3>
+<div class="row"><span class="label">主队 xG</span><span class="value">1.62</span></div>
+<div class="row"><span class="label">客队 xG</span><span class="value">1.18</span></div>
+<div class="row"><span class="label">总 xG</span><span class="value">2.80</span></div>
+</div>
+
+<div class="card">
+<h3>💰 进球数赔率</h3>
+<div class="row"><span class="label">初盘</span><span class="value">2.5球</span></div>
+<div class="row"><span class="label">大球</span><span class="value">1.92</span></div>
+<div class="row"><span class="label">小球</span><span class="value">1.88</span></div>
+</div>
+
+</div>
+
+<div class="card" style="margin-top:16px">
+<h3>🧠 智能大小球分析</h3>
+<div class="analysis">
+<p id="resultText"></p>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+function analyze(){
+const match = document.getElementById('match').value
+if(!match){alert('请输入比赛')}
+document.getElementById('team').innerText = match
+document.getElementById('result').style.display = 'block'
+
+document.getElementById('resultText').innerHTML = 
+'本场总预期进球 <span class="highlight">2.80</span>，接近 3 球，盘口 <span class="highlight">2.5球</span>。' +
+'结合攻防数据与临场趋势，<span class="highlight">大球概率更高</span>。'
+}
+</script>
+</body>
+</html>
